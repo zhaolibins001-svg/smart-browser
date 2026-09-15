@@ -45,19 +45,27 @@ Smart Browser MCP 把「页面理解」这件事做成了模型的原生能力�
 
 ## 快速开始
 
-### 1. 安装
+### 1. 安装（当前请使用源码方式）
+
+> 本项目**尚未发布到 npm**，`npm install -g @han/claude-browser-mcp` 暂时不可用，请按下面的源码方式安装。
+
+**环境要求**：Node.js ≥ 18
 
 ```bash
-# 从 npm 安装
-npm install -g @han/claude-browser-mcp
-
-# 或从源码安装
 git clone https://gitee.com/zhaolibin001/smart-browser.git
 cd smart-browser
-npm install
-npm run build
-npm link
+npm install          # 安装依赖
+npm run build        # 构建到 dist/
+npm link             # 注册全局命令 claude-browser-mcp / browser-mcp（可选）
 ```
+
+`npm link` 只是为了在任意目录使用 `claude-browser-mcp` 这个命令。如果不执行它，可以在 MCP 配置里直接用 `node` 指向 `dist/index.js` 的绝对路径（见下一节）。
+
+> 可选加速：本项目通过 CDP 连接你本机已安装的 Chrome / Edge，不需要 Playwright 自带的浏览器。若 `npm install` 下载浏览器过慢，可跳过下载：
+>
+> ```powershell
+> $env:PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1; npm install
+> ```
 
 ### 2. 配置 MCP 客户端
 
