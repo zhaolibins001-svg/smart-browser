@@ -1,0 +1,17 @@
+node_modules/
+dist/
+*.log
+.DS_Store
+.env
+browser-screenshots/
+browser-flows/
+browser-memory.json
+api-env.json
+api-suites/
+
+# 本地备份文件
+*.rar
+*.zip
+
+# 内部笔记
+改进建议.txt
