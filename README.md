@@ -4,6 +4,8 @@
 > 基于 Playwright + Chrome DevTools Protocol，让大模型像人一样"看得懂"页面、点得准按钮、跑得通流程。
 > 模仿ego-lite 的windows智能浏览器工具
 
+**仓库**：[Gitee 主仓库](https://gitee.com/zhaolibin001/smart-browser) · [GitHub 镜像](https://github.com/zhaolibins001-svg/smart-browser)
+
 ![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen)
 ![MCP](https://img.shields.io/badge/MCP-compatible-blue)
 ![License](https://img.shields.io/badge/license-ISC-green)
@@ -52,7 +54,10 @@ Smart Browser MCP 把「页面理解」这件事做成了模型的原生能力�
 **环境要求**：Node.js ≥ 18
 
 ```bash
-git clone https://gitee.com/zhaolibin001/smart-browser.git
+# 任选一个源，内容一致
+git clone https://gitee.com/zhaolibin001/smart-browser.git          # Gitee 主仓库
+# git clone https://github.com/zhaolibins001-svg/smart-browser.git  # GitHub 镜像
+
 cd smart-browser
 npm install          # 安装依赖
 npm run build        # 构建到 dist/
