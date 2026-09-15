@@ -4,9 +4,10 @@
 > 基于 Playwright + Chrome DevTools Protocol，让大模型像人一样"看得懂"页面、点得准按钮、跑得通流程。
 > 模仿ego-lite 的windows智能浏览器工具
 
-**仓库**：[Gitee 主仓库](https://gitee.com/zhaolibin001/smart-browser) · [GitHub 镜像](https://github.com/zhaolibins001-svg/smart-browser)
+**仓库**：[Gitee 主仓库](https://gitee.com/zhaolibin001/smart-browser) · [GitHub 镜像](https://github.com/zhaolibins001-svg/smart-browser) · [npm](https://www.npmjs.com/package/@zhaolibin/smart-browser-mcp)
 
 ![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen)
+![npm](https://img.shields.io/npm/v/%40zhaolibin%2Fsmart-browser-mcp)
 ![MCP](https://img.shields.io/badge/MCP-compatible-blue)
 ![License](https://img.shields.io/badge/license-ISC-green)
 
@@ -47,11 +48,21 @@ Smart Browser MCP 把「页面理解」这件事做成了模型的原生能力�
 
 ## 快速开始
 
-### 1. 安装（当前请使用源码方式）
+### 1. 安装
 
-> 本项目**尚未发布到 npm**，`npm install -g @han/claude-browser-mcp` 暂时不可用，请按下面的源码方式安装。
+**方式一：npx（推荐，免安装）**
 
-**环境要求**：Node.js ≥ 18
+不需要全局安装，MCP 客户端配置里直接用 `npx` 调用即可，见下一节。
+
+**方式二：全局安装**
+
+```bash
+npm install -g @zhaolibin/smart-browser-mcp
+```
+
+安装后可使用 `smart-browser-mcp` 命令（同时提供 `claude-browser-mcp`、`browser-mcp` 两个别名）。
+
+**方式三：从源码构建**
 
 ```bash
 # 任选一个源，内容一致
@@ -61,15 +72,15 @@ git clone https://gitee.com/zhaolibin001/smart-browser.git          # Gitee 主�
 cd smart-browser
 npm install          # 安装依赖
 npm run build        # 构建到 dist/
-npm link             # 注册全局命令 claude-browser-mcp / browser-mcp（可选）
+npm link             # 注册全局命令（可选）
 ```
 
-`npm link` 只是为了在任意目录使用 `claude-browser-mcp` 这个命令。如果不执行它，可以在 MCP 配置里直接用 `node` 指向 `dist/index.js` 的绝对路径（见下一节）。
+**环境要求**：Node.js ≥ 18
 
-> 可选加速：本项目通过 CDP 连接你本机已安装的 Chrome / Edge，不需要 Playwright 自带的浏览器。若 `npm install` 下载浏览器过慢，可跳过下载：
+> 可选加速：本项目通过 CDP 连接你本机已安装的 Chrome / Edge，不需要 Playwright 自带的浏览器。若安装时下载浏览器过慢，可跳过下载：
 >
 > ```powershell
-> $env:PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1; npm install
+> $env:PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1; npm install -g @zhaolibin/smart-browser-mcp
 > ```
 
 ### 2. 配置 MCP 客户端
@@ -80,7 +91,8 @@ npm link             # 注册全局命令 claude-browser-mcp / browser-mcp（可
 {
   "mcpServers": {
     "browser": {
-      "command": "claude-browser-mcp",
+      "command": "npx",
+      "args": ["-y", "@zhaolibin/smart-browser-mcp"],
       "env": {
         "BROWSER_PATH": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
         "BROWSER_USER_DATA_DIR": "D:\\Projects\\AIchrome-profile",
@@ -91,14 +103,13 @@ npm link             # 注册全局命令 claude-browser-mcp / browser-mcp（可
 }
 ```
 
-如果 `claude-browser-mcp` 不在 PATH 中，改用绝对路径：
+如果已经全局安装（`npm install -g @zhaolibin/smart-browser-mcp`），也可以直接用可执行文件名（`smart-browser-mcp`）：
 
 ```json
 {
   "mcpServers": {
     "browser": {
-      "command": "node",
-      "args": ["D:/Projects/smart-browser/dist/index.js"],
+      "command": "smart-browser-mcp",
       "env": {
         "BROWSER_PATH": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
       }
