@@ -1,6 +1,6 @@
 {
   "name": "@zhaolibin/smart-browser-mcp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Browser automation and API testing MCP server built on Playwright + CDP. Numbered element refs and Set-of-Mark screenshots let AI agents target the right node; flow record/replay, element memory, captcha handoff and an HTTP API test suite.",
   "main": "./dist/index.js",
   "type": "module",
