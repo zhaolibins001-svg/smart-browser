@@ -2,6 +2,7 @@
 
 > 面向 AI 编程助手（Claude Code / Claude Desktop / Cursor 等）的浏览器自动化 + 接口测试 MCP 服务器。
 > 基于 Playwright + Chrome DevTools Protocol，让大模型像人一样"看得懂"页面、点得准按钮、跑得通流程。
+> 模仿ego-lite 的windows智能浏览器工具
 
 ![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen)
 ![MCP](https://img.shields.io/badge/MCP-compatible-blue)
