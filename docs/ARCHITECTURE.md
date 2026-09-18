@@ -1,6 +1,6 @@
 # 架构说明
 
-![Smart Browser MCP 架构图](./架构图.png)
+![Smart Browser MCP 架构图](./architecture.png)
 
 > 适用版本：v1.0.1 ｜ 对应源码：`src/index.js`（约 2014 行，单文件实现）
 
