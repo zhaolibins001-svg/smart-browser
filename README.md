@@ -211,6 +211,8 @@ AI 会自动调用 `browser_open` → `browser_observe` → `browser_fill` → `
 
 ## 工作机制
 
+> 模块分层、核心机制、状态管理与扩展方式详见 **[docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md)**。
+
 ```
 AI 助手 ──stdio──> Smart Browser MCP ──Playwright/CDP──> Chrome / Edge
                           │
