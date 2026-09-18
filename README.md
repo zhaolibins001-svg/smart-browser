@@ -211,6 +211,8 @@ AI 会自动调用 `browser_open` → `browser_observe` → `browser_fill` → `
 
 ## 工作机制
 
+![Smart Browser MCP 架构图](./docs/架构图.png)
+
 > 模块分层、核心机制、状态管理与扩展方式详见 **[docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md)**。
 
 ```

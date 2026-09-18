@@ -1,5 +1,7 @@
 # 架构说明
 
+![Smart Browser MCP 架构图](./架构图.png)
+
 > 适用版本：v1.0.1 ｜ 对应源码：`src/index.js`（约 2014 行，单文件实现）
 
 本文说明 Smart Browser MCP 的分层结构、核心机制与扩展方式，便于二次开发与问题定位。
