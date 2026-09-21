@@ -25,6 +25,13 @@ jobs:
           node-version: "24"
           registry-url: "https://registry.npmjs.org"
 
+      - name: Ensure recent npm
+        # Trusted Publishing（OIDC）需要 npm >= 11.5.1，旧版本会直接 403
+        run: |
+          npm install -g npm@latest
+          node -v
+          npm -v
+
       - name: Install dependencies
         run: npm install
         env:
