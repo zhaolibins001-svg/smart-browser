@@ -1,0 +1,36 @@
+name: Publish to npm
+
+# 打 tag（v1.0.3、v1.0.4 …）时自动发布到 npm；也可在 Actions 页手动触发
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # Trusted Publishing：用 OIDC 换取发布凭据，无需任何长期 token
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: "24"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install dependencies
+        run: npm install
+        env:
+          # 本项目通过 CDP 连接使用者本机浏览器，不需要 Playwright 自带内核，跳过下载以加快 CI
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
+
+      - name: Publish to npm
+        # prepublishOnly 会先执行 esbuild 构建（npm run build）
+        run: npm publish --access public
