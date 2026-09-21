@@ -114,6 +114,19 @@ SoM 标注通过注入 `.mcp-mark-overlay` 覆盖层实现；无论截图成功�
 | `http` | 响应状态 ≥ 400 |
 | `dialog` | 原生 `alert` / `confirm` / `prompt`（**自动 accept**，并记录，防止操作卡死） |
 
+### 3.6 工具注解（Tool Annotations）
+
+39 个工具全部显式声明四个布尔 hint，集中定义在源码的 `TOOL_ANNOTATIONS` 表中，由 `registerTool` 包装器统一注入到 `tools/list` 响应：
+
+| Hint | 含义 | 本项目的判定口径 |
+| --- | --- | --- |
+| `readOnlyHint` | 只读，不改变任何数据 | 观察类 + 本地读取类，共 16 个 |
+| `destructiveHint` | 可能破坏已有数据 | 删除类（`browser_forget`、`*_clear_errors`）与可发 `DELETE`/`PUT` 的接口请求类，共 7 个 |
+| `idempotentHint` | 重复调用与单次调用等价 | 设置型操作（`open` / `fill` / `select` / `hover` / `set_viewport` 等） |
+| `openWorldHint` | 与外部世界交互 | 浏览器与 HTTP 请求类共 28 个；纯本地文件/状态类为 `false` |
+
+客户端可据此在调用前提示风险。OpenAI 的 MCP 目录要求所有工具显式声明这四项且必须为布尔值，缺失或类型不符会被直接拒收。
+
 ---
 
 ## 4. 状态与产物
@@ -184,6 +197,7 @@ server.registerTool("browser_my_tool", {
 2. 如果新工具完全不需要浏览器（例如纯文件操作或 HTTP 请求），把它加入 `noBrowserTools` 集合
 3. 交互类工具优先消费 `ref`，并复用 `resolveTarget` / `clickWithBackup` / `fillWithBackup` 以获得降级能力
 4. 返回值统一用 `result(text)` 包装
+5. **在 `TOOL_ANNOTATIONS` 中登记该工具的四个注解**（`readOnlyHint` / `destructiveHint` / `idempotentHint` / `openWorldHint`）：包装器会自动注入到 `tools/list`，缺一项都可能让上架审核（如 OpenAI 目录）被拒
 
 ---
 

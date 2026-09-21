@@ -731,6 +731,66 @@ const server = new McpServer({
     version: "2.0.0"
 });
 
+// -------------------------
+// 工具注解（Tool Annotations）
+// -------------------------
+// 声明每个工具的 readOnlyHint / destructiveHint / idempotentHint / openWorldHint，
+// 供 MCP 客户端在调用前评估风险；四项必须是显式布尔值。
+// openWorldHint: 是否与外部世界（互联网上的页面 / API）交互，false 表示只操作本地状态与文件。
+
+const TOOL_ANNOTATIONS = {
+    // ---- 只读观察类：只读取页面或本地状态，不改变任何数据 ----
+    browser_text:             { readOnlyHint: true,  destructiveHint: false, idempotentHint: true,  openWorldHint: true },
+    browser_snapshot:         { readOnlyHint: true,  destructiveHint: false, idempotentHint: true,  openWorldHint: true },
+    browser_analyze_page:     { readOnlyHint: true,  destructiveHint: false, idempotentHint: true,  openWorldHint: true },
+    browser_extract_site_map: { readOnlyHint: true,  destructiveHint: false, idempotentHint: true,  openWorldHint: true },
+    browser_elements:         { readOnlyHint: true,  destructiveHint: false, idempotentHint: true,  openWorldHint: true },
+    browser_mark_screenshot:  { readOnlyHint: true,  destructiveHint: false, idempotentHint: true,  openWorldHint: true },
+    browser_observe:          { readOnlyHint: true,  destructiveHint: false, idempotentHint: true,  openWorldHint: true },
+    browser_screenshot:       { readOnlyHint: true,  destructiveHint: false, idempotentHint: true,  openWorldHint: true },
+    browser_tabs:             { readOnlyHint: true,  destructiveHint: false, idempotentHint: true,  openWorldHint: true },
+    browser_wait_human:       { readOnlyHint: true,  destructiveHint: false, idempotentHint: true,  openWorldHint: true },
+    browser_recall:           { readOnlyHint: true,  destructiveHint: false, idempotentHint: false, openWorldHint: true },
+
+    // ---- 只读本地状态：不触网 ----
+    browser_errors:           { readOnlyHint: true,  destructiveHint: false, idempotentHint: true,  openWorldHint: false },
+    browser_flow_list:        { readOnlyHint: true,  destructiveHint: false, idempotentHint: true,  openWorldHint: false },
+    browser_memory_list:      { readOnlyHint: true,  destructiveHint: false, idempotentHint: true,  openWorldHint: false },
+    api_suite_list:           { readOnlyHint: true,  destructiveHint: false, idempotentHint: true,  openWorldHint: false },
+    api_errors:               { readOnlyHint: true,  destructiveHint: false, idempotentHint: true,  openWorldHint: false },
+
+    // ---- 页面交互：会改变页面状态，但不直接销毁数据 ----
+    browser_open:             { readOnlyHint: false, destructiveHint: false, idempotentHint: true,  openWorldHint: true },
+    browser_click:            { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: true },
+    browser_fill:             { readOnlyHint: false, destructiveHint: false, idempotentHint: true,  openWorldHint: true },
+    browser_press:            { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: true },
+    browser_scroll:           { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: true },
+    browser_select:           { readOnlyHint: false, destructiveHint: false, idempotentHint: true,  openWorldHint: true },
+    browser_hover:            { readOnlyHint: false, destructiveHint: false, idempotentHint: true,  openWorldHint: true },
+    browser_switch_tab:       { readOnlyHint: false, destructiveHint: false, idempotentHint: true,  openWorldHint: true },
+    browser_new_tab:          { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: true },
+    browser_set_viewport:     { readOnlyHint: false, destructiveHint: false, idempotentHint: true,  openWorldHint: true },
+    browser_auto_test:        { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: true },
+    browser_flow_run:         { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: true },
+
+    // ---- 本地文件写入：不触网，但会改动本地数据 ----
+    browser_flow_record:      { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
+    browser_remember:         { readOnlyHint: false, destructiveHint: false, idempotentHint: true,  openWorldHint: false },
+    api_set_env:              { readOnlyHint: false, destructiveHint: false, idempotentHint: true,  openWorldHint: false },
+
+    // ---- 删除类：会移除已有数据 ----
+    browser_forget:           { readOnlyHint: false, destructiveHint: true,  idempotentHint: true,  openWorldHint: false },
+    browser_clear_errors:     { readOnlyHint: false, destructiveHint: true,  idempotentHint: true,  openWorldHint: false },
+    api_clear_errors:         { readOnlyHint: false, destructiveHint: true,  idempotentHint: true,  openWorldHint: false },
+
+    // ---- 对外请求：可发送任意方法（含 DELETE/PUT），可能影响远端数据 ----
+    api_login:                { readOnlyHint: false, destructiveHint: false, idempotentHint: true,  openWorldHint: true },
+    api_request:              { readOnlyHint: false, destructiveHint: true,  idempotentHint: false, openWorldHint: true },
+    api_assert:               { readOnlyHint: false, destructiveHint: true,  idempotentHint: false, openWorldHint: true },
+    api_test_suite:           { readOnlyHint: false, destructiveHint: true,  idempotentHint: false, openWorldHint: true },
+    api_suite_run:            { readOnlyHint: false, destructiveHint: true,  idempotentHint: false, openWorldHint: true }
+};
+
 // 自动为需要浏览器的 tool 注入 ensureBrowser()
 const _registerTool = server.registerTool.bind(server);
 const noBrowserTools = new Set([
@@ -752,10 +812,13 @@ const noBrowserTools = new Set([
     "api_clear_errors"
 ]);
 server.registerTool = (name, meta, handler) => {
+    const annotations = TOOL_ANNOTATIONS[name];
+    const config = annotations ? { ...meta, annotations } : meta;
+
     if (noBrowserTools.has(name)) {
-        return _registerTool(name, meta, handler);
+        return _registerTool(name, config, handler);
     }
-    return _registerTool(name, meta, async (args) => {
+    return _registerTool(name, config, async (args) => {
         await ensureBrowser();
         return handler(args);
     });
