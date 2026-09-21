@@ -9,6 +9,7 @@
 ![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen)
 ![npm](https://img.shields.io/npm/v/%40zhaolibin%2Fsmart-browser-mcp)
 ![Publish](https://github.com/zhaolibins001-svg/smart-browser/actions/workflows/publish.yml/badge.svg)
+[![M8ven Verified](https://m8ven.ai/badge/mcp/zhaolibins001-svg-smart-browser-cc0ndz)](https://m8ven.ai/mcp/zhaolibins001-svg-smart-browser-cc0ndz)
 ![MCP](https://img.shields.io/badge/MCP-compatible-blue)
 ![License](https://img.shields.io/badge/license-ISC-green)
 
