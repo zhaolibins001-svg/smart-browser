@@ -293,4 +293,4 @@ A：页面变动后重新调用 `browser_observe` 刷新 ref 映射，或先用 
 
 ## 许可证
 
-[ISC License](./LICENSE) · [隐私政策 / Privacy Policy](./PRIVACY.md)
+[ISC License](./LICENSE) · [隐私政策 / Privacy Policy](./PRIVACY.md) · [更新日志 / Changelog](./CHANGELOG.md)
