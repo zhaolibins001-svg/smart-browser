@@ -745,9 +745,14 @@ const TOOL_ANNOTATIONS = {
     browser_analyze_page:     { readOnlyHint: true,  destructiveHint: false, idempotentHint: true,  openWorldHint: true },
     browser_extract_site_map: { readOnlyHint: true,  destructiveHint: false, idempotentHint: true,  openWorldHint: true },
     browser_elements:         { readOnlyHint: true,  destructiveHint: false, idempotentHint: true,  openWorldHint: true },
-    browser_mark_screenshot:  { readOnlyHint: true,  destructiveHint: false, idempotentHint: true,  openWorldHint: true },
-    browser_observe:          { readOnlyHint: true,  destructiveHint: false, idempotentHint: true,  openWorldHint: true },
-    browser_screenshot:       { readOnlyHint: true,  destructiveHint: false, idempotentHint: true,  openWorldHint: true },
+
+    // ---- 会写文件系统或临时改动页面 DOM：不满足 readOnlyHint ----
+    // browser_screenshot 会 mkdir + 写 JPEG；mark_screenshot 与 observe(level 2)
+    // 会注入并清理 .mcp-mark-overlay 覆盖层与动画禁用样式，因此按最保守语义标注。
+    browser_mark_screenshot:  { readOnlyHint: false, destructiveHint: false, idempotentHint: true,  openWorldHint: true },
+    browser_observe:          { readOnlyHint: false, destructiveHint: false, idempotentHint: true,  openWorldHint: true },
+    browser_screenshot:       { readOnlyHint: false, destructiveHint: false, idempotentHint: true,  openWorldHint: true },
+
     browser_tabs:             { readOnlyHint: true,  destructiveHint: false, idempotentHint: true,  openWorldHint: true },
     browser_wait_human:       { readOnlyHint: true,  destructiveHint: false, idempotentHint: true,  openWorldHint: true },
     browser_recall:           { readOnlyHint: true,  destructiveHint: false, idempotentHint: false, openWorldHint: true },

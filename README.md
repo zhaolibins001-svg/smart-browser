@@ -9,7 +9,7 @@
 ![Node](https://img.shields.io/badge/node-%3E%3D18-brightgreen)
 ![npm](https://img.shields.io/npm/v/%40zhaolibin%2Fsmart-browser-mcp)
 ![Publish](https://github.com/zhaolibins001-svg/smart-browser/actions/workflows/publish.yml/badge.svg)
-[![M8ven Verified](https://m8ven.ai/badge/mcp/zhaolibins001-svg-smart-browser-cc0ndz)](https://m8ven.ai/mcp/zhaolibins001-svg-smart-browser-cc0ndz)
+[![M8ven Verified](https://m8ven.ai/badge/mcp/zhaolibins001-svg-smart-browser-cc0ndz?variant=verified&v=3f30762c71b85d23c16fed096feca121)](https://m8ven.ai/mcp/zhaolibins001-svg-smart-browser-cc0ndz?s=readme)
 ![MCP](https://img.shields.io/badge/MCP-compatible-blue)
 ![License](https://img.shields.io/badge/license-ISC-green)
 
@@ -256,6 +256,7 @@ npm run dev           # 直接从源码运行
 npm run build         # 构建到 dist/
 npm run build:minify  # 构建并压缩
 npm start             # 运行构建产物
+npm test              # 契约测试（工具数量、注解完整性、只读语义）
 ```
 
 技术栈：Node.js ≥ 18 · [@modelcontextprotocol/sdk](https://github.com/modelcontextprotocol/sdk) · [Playwright](https://playwright.dev/) · [Zod](https://zod.dev/) · esbuild
@@ -292,4 +293,4 @@ A：页面变动后重新调用 `browser_observe` 刷新 ref 映射，或先用 
 
 ## 许可证
 
-[ISC License](./LICENSE)
+[ISC License](./LICENSE) · [隐私政策 / Privacy Policy](./PRIVACY.md)
