@@ -32,6 +32,12 @@ jobs:
           node -v
           npm -v
 
+      - name: Normalize lockfile registry
+        # 本地若使用镜像源（npmmirror 等），镜像地址会被写进 package-lock.json，
+        # 而 GitHub runner 上拉不到该地址，会导致安装步骤整体失败（v1.0.4 / v1.0.6 曾因此失败）。
+        # 这里统一改写回官方源，避免发布被本地镜像配置污染。
+        run: sed -i 's|https://registry\.npmmirror\.com|https://registry.npmjs.org|g' package-lock.json
+
       - name: Install dependencies
         run: npm install
         env:
